@@ -1,5 +1,3 @@
-alert("It works");
+import { getWeatherData } from "./weather-api.js";
 
-let something = console.log("anything");
-
-alert(something);
+getWeatherData("Pakistan");
