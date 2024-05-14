@@ -1,3 +1,9 @@
 import { getWeatherData } from "./weather-api.js";
 
-getWeatherData("Pakistan");
+const locationBtn = document.getElementById("locationBtn");
+const weatherLoc = document.getElementById("weatherLoc");
+
+locationBtn.addEventListener("click", () => {
+  getWeatherData();
+  weatherLoc.value = "";
+});

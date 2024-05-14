@@ -1,12 +1,10 @@
-import { processWeatherData } from "./weatherData.js";
+export async function getWeatherData() {
+  const weatherLoc = document.getElementById("weatherLoc");
 
-export async function getWeatherData(location) {
-  // const weatherLoc = document.getElementById("weatherLoc").value;
-
-  let apiKey = "";
+  let apiKey = "0d353533d1cd4029975135630240705";
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`,
+      `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${weatherLoc.value}&aqi=no`,
       { mode: "cors" }
     );
     const data = await response.json();
@@ -16,4 +14,39 @@ export async function getWeatherData(location) {
     console.log("Error fetching the image: ", error);
     return null;
   }
+}
+
+function processWeatherData(data) {
+  if (!data || !data.current) {
+    console.log("Please provide the correct data");
+  }
+
+  const {
+    condition,
+    feelslike_c,
+    feelslike_f,
+    wind_mph,
+    humidity,
+    vis_miles,
+    temp_c,
+    temp_f,
+    uv,
+    gust_mph,
+  } = data.current;
+
+  const weatherInfo = {
+    Weather: condition,
+    feelsLikeC: feelslike_c,
+    feelsLikef: feelslike_f,
+    wind: wind_mph,
+    humidity: humidity,
+    visibility: vis_miles,
+    temperatureC: temp_c,
+    temperatureF: temp_f,
+    uvIndex: uv,
+    gust: gust_mph,
+  };
+
+  console.log(weatherInfo);
+  return weatherInfo;
 }

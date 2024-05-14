@@ -12,40 +12,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getWeatherData: () => (/* binding */ getWeatherData)
 /* harmony export */ });
-/* harmony import */ var _weatherData_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weatherData.js */ "./src/weatherData.js");
-
-
-async function getWeatherData(location) {
-  // const weatherLoc = document.getElementById("weatherLoc").value;
+async function getWeatherData() {
+  const weatherLoc = document.getElementById("weatherLoc");
 
   let apiKey = "0d353533d1cd4029975135630240705";
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`,
+      `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${weatherLoc.value}&aqi=no`,
       { mode: "cors" }
     );
     const data = await response.json();
     console.log(data);
-    return (0,_weatherData_js__WEBPACK_IMPORTED_MODULE_0__.processWeatherData)(data);
+    return processWeatherData(data);
   } catch (error) {
     console.log("Error fetching the image: ", error);
     return null;
   }
 }
 
-
-/***/ }),
-
-/***/ "./src/weatherData.js":
-/*!****************************!*\
-  !*** ./src/weatherData.js ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   processWeatherData: () => (/* binding */ processWeatherData)
-/* harmony export */ });
 function processWeatherData(data) {
   if (!data || !data.current) {
     console.log("Please provide the correct data");
@@ -61,6 +45,7 @@ function processWeatherData(data) {
     temp_c,
     temp_f,
     uv,
+    gust_mph,
   } = data.current;
 
   const weatherInfo = {
@@ -73,6 +58,7 @@ function processWeatherData(data) {
     temperatureC: temp_c,
     temperatureF: temp_f,
     uvIndex: uv,
+    gust: gust_mph,
   };
 
   console.log(weatherInfo);
@@ -148,7 +134,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _weather_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather-api.js */ "./src/weather-api.js");
 
 
-(0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.getWeatherData)("Pakistan");
+const locationBtn = document.getElementById("locationBtn");
+const weatherLoc = document.getElementById("weatherLoc");
+
+locationBtn.addEventListener("click", () => {
+  (0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.getWeatherData)();
+  weatherLoc.value = "";
+});
 
 })();
 
