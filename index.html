@@ -12,14 +12,101 @@
     </header>
 
     <main class="container">
-      <form action="none">
-        <div class="weatherLocation">
-          <label for="weatherLoc">Location</label>
-          <input type="text" name="weatherLoc" id="weatherLoc" />
+      <article class="location-input">
+        <form action="none">
+          <div class="weatherLocation">
+            <label for="weatherLoc">Location</label>
+            <input type="text" name="weatherLoc" id="weatherLoc" />
+          </div>
+
+          <button id="locationBtn" type="button">Submit</button>
+        </form>
+      </article>
+
+      <article class="frontPage showData">
+        <div class="topFront">
+          <div class="currentLocation">
+            <p class="todayName">today</p>
+            <p class="todayTime"></p>
+            <p class="locationToday"></p>
+          </div>
+
+          <div class="currentTemp">
+            <p class="currentCelcius"></p>
+            <p class="currentHigh"></p>
+            <p class="currentLow"></p>
+          </div>
         </div>
 
-        <button id="locationBtn" type="button">Submit</button>
-      </form>
+        <div class="bottomFront">
+          <div class="weatherAlert">
+            <p class="conditionAlert"></p>
+            <p class="weatherCondition"></p>
+            <p class="nextCycle"></p>
+          </div>
+
+          <div class="todayHours"></div>
+        </div>
+
+        <div class="pageSlider"></div>
+      </article>
+
+      <article class="backPage showData">
+        <div class="topBack">
+          <div class="uvIndex">
+            <p class="uvIndexText">uv Index</p>
+            <p class="uvIndexData"></p>
+          </div>
+
+          <div class="wind">
+            <p class="windText">Wind</p>
+            <p class="windData"></p>
+          </div>
+
+          <div class="humidity">
+            <p class="humiditiyText">humidity</p>
+            <p class="humiditiyData"></p>
+          </div>
+
+          <div class="feelsLike">
+            <p class="feelsLikeText">feelsLike</p>
+            <p class="feelsLikeData"></p>
+          </div>
+
+          <div class="visibility">
+            <p class="visibilityText">visibility</p>
+            <p class="visibilityData"></p>
+          </div>
+
+          <div class="gust">
+            <p class="gustText">gust</p>
+            <p class="gustData"></p>
+          </div>
+        </div>
+
+        <div class="middleBack">
+          <div class="nextDays">next 2 days</div>
+          <div class="forecast">Forecast</div>
+        </div>
+
+        <div class="bottomBack">
+          <div class="todayCast">
+            <p class="nextDate"></p>
+            <p class="daySituation"></p>
+            <p class="dayTemperature"></p>
+          </div>
+          <div class="tomorrowCast">
+            <p class="nextDate"></p>
+            <p class="daySituation"></p>
+            <p class="dayTemperature"></p>
+          </div>
+          <div class="nextDayCast">
+            <p class="nextDate"></p>
+            <p class="daySituation"></p>
+            <p class="dayTemperature"></p>
+          </div>
+        </div>
+      </article>
     </main>
 
     <footer></footer>
