@@ -4,6 +4,6 @@ const locationBtn = document.getElementById("locationBtn");
 const weatherLoc = document.getElementById("weatherLoc");
 
 locationBtn.addEventListener("click", () => {
-  getWeatherData();
+  getWeatherData(weatherLoc.value);
   weatherLoc.value = "";
 });
