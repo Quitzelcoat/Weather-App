@@ -21,6 +21,7 @@ async function processWeatherData(data) {
   }
 
   const currentWeather = processCurrentWeather(data.current);
+  const weatherLocation = currentLocation(data.location);
   const hourlyForecast = processHourlyForecast(
     data.forecast.forecastday[0].hour
   );
@@ -30,6 +31,7 @@ async function processWeatherData(data) {
 
   return {
     current: currentWeather,
+    location: weatherLocation,
     hourly: hourlyForecast,
     daily: dailyForecast,
   };
@@ -64,6 +66,19 @@ async function processCurrentWeather(currentWeather) {
   return weatherInfo;
 }
 
+async function currentLocation(currentLocationData) {
+  const { country, localtime, name } = currentLocationData;
+
+  const LocationData = {
+    country: country,
+    time: localtime,
+    city: name,
+  };
+
+  console.log(LocationData);
+  return LocationData;
+}
+
 async function processHourlyForecast(hourlyData) {
   const next12Hours = hourlyData.slice(0, 13).map((hour) => ({
     time: hour.time,
@@ -74,6 +89,7 @@ async function processHourlyForecast(hourlyData) {
   console.log(next12Hours);
   return next12Hours;
 }
+
 async function processDailyForecast(dailyData) {
   const next3Days = dailyData.map((day) => ({
     date: day.date,
@@ -82,6 +98,7 @@ async function processDailyForecast(dailyData) {
     maxTemperature: day.day.maxtemp_c,
     minTemperature: day.day.mintemp_c,
   }));
+
   console.log(next3Days);
   return next3Days;
 }
