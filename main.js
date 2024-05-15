@@ -12,13 +12,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getWeatherData: () => (/* binding */ getWeatherData)
 /* harmony export */ });
-async function getWeatherData() {
-  const weatherLoc = document.getElementById("weatherLoc");
-
+async function getWeatherData(location) {
   let apiKey = "0d353533d1cd4029975135630240705";
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${weatherLoc.value}&aqi=no`,
+      `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4&aqi=yes&alerts=yes`,
       { mode: "cors" }
     );
     const data = await response.json();
@@ -30,39 +28,76 @@ async function getWeatherData() {
   }
 }
 
-function processWeatherData(data) {
+async function processWeatherData(data) {
   if (!data || !data.current) {
-    console.log("Please provide the correct data");
+    console.log("Invalid data format or missing current weather information.");
+    return null;
   }
 
+  const currentWeather = processCurrentWeather(data.current);
+  const hourlyForecast = processHourlyForecast(
+    data.forecast.forecastday[0].hour
+  );
+  const dailyForecast = processDailyForecast(
+    data.forecast.forecastday.slice(0, 3)
+  );
+
+  return {
+    current: currentWeather,
+    hourly: hourlyForecast,
+    daily: dailyForecast,
+  };
+}
+
+async function processCurrentWeather(currentWeather) {
   const {
     condition,
     feelslike_c,
-    feelslike_f,
     wind_mph,
     humidity,
     vis_miles,
     temp_c,
-    temp_f,
     uv,
     gust_mph,
-  } = data.current;
+    air_quality,
+  } = currentWeather;
 
   const weatherInfo = {
-    Weather: condition,
+    Weather: condition.text,
     feelsLikeC: feelslike_c,
-    feelsLikef: feelslike_f,
     wind: wind_mph,
     humidity: humidity,
     visibility: vis_miles,
     temperatureC: temp_c,
-    temperatureF: temp_f,
     uvIndex: uv,
     gust: gust_mph,
+    airQuality: air_quality.pm10,
   };
 
   console.log(weatherInfo);
   return weatherInfo;
+}
+
+async function processHourlyForecast(hourlyData) {
+  const next12Hours = hourlyData.slice(0, 13).map((hour) => ({
+    time: hour.time,
+    temperature: hour.temp_c,
+    condition: hour.condition.text,
+  }));
+
+  console.log(next12Hours);
+  return next12Hours;
+}
+async function processDailyForecast(dailyData) {
+  const next3Days = dailyData.map((day) => ({
+    date: day.date,
+    condition: day.day.condition.text,
+    chanceOfRain: day.day.daily_chance_of_rain,
+    maxTemperature: day.day.maxtemp_c,
+    minTemperature: day.day.mintemp_c,
+  }));
+  console.log(next3Days);
+  return next3Days;
 }
 
 
@@ -138,7 +173,7 @@ const locationBtn = document.getElementById("locationBtn");
 const weatherLoc = document.getElementById("weatherLoc");
 
 locationBtn.addEventListener("click", () => {
-  (0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.getWeatherData)();
+  (0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.getWeatherData)(weatherLoc.value);
   weatherLoc.value = "";
 });
 
