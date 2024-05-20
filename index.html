@@ -12,10 +12,14 @@
     </header>
 
     <main class="container">
+      <!-- Front Page -->
+
       <article class="location-input">
+        <!-- Location Search Bar -->
         <form action="none">
           <div class="weatherLocation">
             <label for="weatherLoc">Location</label>
+
             <input type="text" name="weatherLoc" id="weatherLoc" />
           </div>
 
@@ -24,6 +28,7 @@
       </article>
 
       <article class="frontPage showData">
+        <!-- Front Page Weather Info -->
         <div class="topFront">
           <div class="currentLocation">
             <p class="todayName">today</p>
@@ -32,7 +37,7 @@
           </div>
 
           <div class="currentTemp">
-            <p class="currentCelcius"></p>
+            <p id="currentCelcius"></p>
             <p class="currentHigh"></p>
             <p class="currentLow"></p>
           </div>
@@ -40,18 +45,19 @@
 
         <div class="bottomFront">
           <div class="weatherAlert">
-            <p class="conditionAlert"></p>
             <p class="weatherCondition"></p>
-            <p class="nextCycle"></p>
           </div>
 
-          <div class="todayHours"></div>
+          <div id="todayHours"></div>
         </div>
 
         <div class="pageSlider"></div>
       </article>
 
+      <!-- Back Page -->
+
       <article class="backPage showData">
+        <!-- Weather Detail and Next Two days weather Info -->
         <div class="topBack">
           <div class="uvIndex">
             <p class="uvIndexText">uv Index</p>
@@ -78,14 +84,14 @@
             <p class="visibilityData"></p>
           </div>
 
-          <div class="gust">
-            <p class="gustText">gust</p>
-            <p class="gustData"></p>
+          <div class="airQuality">
+            <p class="airQualityText">air quality</p>
+            <p class="airQualityData"></p>
           </div>
         </div>
 
         <div class="middleBack">
-          <div class="nextDays">next 2 days</div>
+          <div class="nextDays">next 3 days</div>
           <div class="forecast">Forecast</div>
         </div>
 
@@ -95,12 +101,20 @@
             <p class="daySituation"></p>
             <p class="dayTemperature"></p>
           </div>
+
           <div class="tomorrowCast">
             <p class="nextDate"></p>
             <p class="daySituation"></p>
             <p class="dayTemperature"></p>
           </div>
+
           <div class="nextDayCast">
+            <p class="nextDate"></p>
+            <p class="daySituation"></p>
+            <p class="dayTemperature"></p>
+          </div>
+
+          <div class="thirdDayCast">
             <p class="nextDate"></p>
             <p class="daySituation"></p>
             <p class="dayTemperature"></p>

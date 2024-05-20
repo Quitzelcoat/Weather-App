@@ -10,27 +10,101 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   weatherDom: () => (/* binding */ weatherDom)
+/* harmony export */   displayWeatherData: () => (/* binding */ displayWeatherData)
 /* harmony export */ });
-const weatherDom = () => {
-  function updateCurrentWeatherDom(currentWeather) {
-    const currentCelcius = document.querySelector(".currentCelcius");
-    currentCelcius.textContent = `${currentWeather.temperature} °C`;
+function displayWeatherData(data) {
+  if (!data) return;
+
+  const currentHigh = document.querySelector(".currentHigh");
+  const currentLow = document.querySelector(".currentLow");
+  const weatherCondition = document.querySelector(".weatherCondition");
+
+  // FRONT PAGE!
+
+  // Display location info
+  document.querySelector(
+    ".todayTime"
+  ).textContent = `Local Time: ${data.location.time}`;
+
+  document.querySelector(
+    ".locationToday"
+  ).textContent = `Location: ${data.location.city}, ${data.location.country}`;
+
+  // Display current weather
+  document.getElementById(
+    "currentCelcius"
+  ).textContent = `Temperature: ${data.current.temperature}°C`;
+
+  if (data.daily.length > 0) {
+    const today = data.daily[0];
+    currentHigh.textContent = `H: ${today.maxTemperature}°C`;
+    currentLow.textContent = `L: ${today.minTemperature}°C`;
+    weatherCondition.textContent = today.condition;
   }
 
-  function updateLocationWeatherDom(currentLocation) {}
+  // Display hourly forecast
+  const todayHours = document.getElementById("todayHours");
+  todayHours.innerHTML = "";
+  data.hourly.forEach((hour) => {
+    const todayHourDiv = document.createElement("div");
+    const todayConditionDiv = document.createElement("div");
+    const todayTimeDiv = document.createElement("div");
 
-  function updateHourlyWeatherDom(hourlyForecast) {}
+    todayHourDiv.textContent = `${hour.temperature}°C`;
+    todayConditionDiv.textContent = `${hour.condition}`;
+    todayTimeDiv.textContent = `${hour.time}`;
 
-  function updateDailyWeatherDom(dailyForecast) {}
+    todayHours.appendChild(todayHourDiv);
+    todayHours.appendChild(todayConditionDiv);
+    todayHours.appendChild(todayTimeDiv);
+  });
 
-  return {
-    updateCurrentWeatherDom,
-    updateLocationWeatherDom,
-    updateHourlyWeatherDom,
-    updateDailyWeatherDom,
-  };
-};
+  // BACK PAGE!
+
+  document.querySelector(
+    ".uvIndexData"
+  ).textContent = `${data.current.uvIndex}`;
+
+  document.querySelector(".windData").textContent = `${data.current.wind}mph`;
+
+  document.querySelector(
+    ".humiditiyData"
+  ).textContent = `${data.current.humidity}%`;
+
+  document.querySelector(
+    ".feelsLikeData"
+  ).textContent = `${data.current.feelsLikeC}°`;
+
+  document.querySelector(
+    ".visibilityData"
+  ).textContent = `${data.current.visibility}mi`;
+
+  document.querySelector(
+    ".airQualityData"
+  ).textContent = `${data.current.airQuality}`;
+
+  // Display next days' forecast
+  const dayCasts = [
+    { selector: ".tomorrowCast", dayIndex: 1 },
+    { selector: ".nextDayCast", dayIndex: 2 },
+    { selector: ".thirdDayCast", dayIndex: 3 },
+  ];
+
+  dayCasts.forEach(({ selector, dayIndex }) => {
+    if (data.daily.length > dayIndex) {
+      const dayData = data.daily[dayIndex];
+      document.querySelector(
+        `${selector} .nextDate`
+      ).textContent = `Date: ${dayData.date}`;
+      document.querySelector(
+        `${selector} .daySituation`
+      ).textContent = `Condition: ${dayData.condition}`;
+      document.querySelector(
+        `${selector} .dayTemperature`
+      ).textContent = `${dayData.maxTemperature}°C / ${dayData.minTemperature}°C`;
+    }
+  });
+}
 
 
 /***/ }),
@@ -55,7 +129,8 @@ const weatherApiData = () => {
       );
       const data = await response.json();
       console.log(data);
-      return processWeatherData(data);
+      const processedData = await processWeatherData(data);
+      return processedData;
     } catch (error) {
       console.log("Error fetching the image: ", error);
       return null;
@@ -70,13 +145,13 @@ const weatherApiData = () => {
       return null;
     }
 
-    const currentWeather = processCurrentWeather(data.current);
-    const weatherLocation = currentLocation(data.location);
-    const hourlyForecast = processHourlyForecast(
+    const currentWeather = await processCurrentWeather(data.current);
+    const weatherLocation = await currentLocation(data.location);
+    const hourlyForecast = await processHourlyForecast(
       data.forecast.forecastday[0].hour
     );
-    const dailyForecast = processDailyForecast(
-      data.forecast.forecastday.slice(0, 3)
+    const dailyForecast = await processDailyForecast(
+      data.forecast.forecastday.slice(0, 4)
     );
 
     return {
@@ -96,7 +171,6 @@ const weatherApiData = () => {
       vis_miles,
       temp_c,
       uv,
-      gust_mph,
       air_quality,
     } = currentWeather;
 
@@ -108,7 +182,6 @@ const weatherApiData = () => {
       visibility: vis_miles,
       temperature: temp_c,
       uvIndex: uv,
-      gust: gust_mph,
       airQuality: air_quality.pm10,
     };
 
@@ -119,9 +192,12 @@ const weatherApiData = () => {
   async function currentLocation(currentLocationData) {
     const { country, localtime, name } = currentLocationData;
 
+    const timePart = localtime.split(" ")[1];
+    const strTime = convertTo12HourFormat(timePart);
+
     const LocationData = {
       country: country,
-      time: localtime,
+      time: strTime,
       city: name,
     };
 
@@ -130,14 +206,36 @@ const weatherApiData = () => {
   }
 
   async function processHourlyForecast(hourlyData) {
-    const next12Hours = hourlyData.slice(0, 13).map((hour) => ({
-      time: hour.time,
-      temperature: hour.temp_c,
-      condition: hour.condition.text,
-    }));
+    const now = new Date();
+    const currentHour = now.getHours();
+    const next12Hours = [];
+
+    for (let i = 0; i < 13; i++) {
+      const hourIndex = (currentHour + i) % 24; // Ensure we wrap around if necessary
+      const hourData = hourlyData[hourIndex];
+
+      const timePart = hourData.time.split(" ")[1];
+      const strTime = convertTo12HourFormat(timePart);
+
+      next12Hours.push({
+        time: strTime,
+        temperature: hourData.temp_c,
+        condition: hourData.condition.text,
+      });
+    }
 
     console.log(next12Hours);
     return next12Hours;
+  }
+
+  function convertTo12HourFormat(timeString) {
+    const [hour, minute] = timeString.split(":");
+    let hours = parseInt(hour);
+    const minutes = parseInt(minute);
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes} ${ampm}`;
   }
 
   async function processDailyForecast(dailyData) {
@@ -234,28 +332,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const weather = (0,_dom_js__WEBPACK_IMPORTED_MODULE_1__.weatherDom)();
-
-async function updateWeatherDom(location) {
-  const weatherData = await (0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.weatherApiData)().getWeatherData(location);
-  if (weatherData) {
-    weather.updateCurrentWeatherDom(weatherData.current);
-    weather.updateLocationWeatherDom(weatherData.location);
-    weather.updateHourlyWeatherDom(weatherData.hourly);
-    weather.updateDailyWeatherDom(weatherData.daily);
-  }
-}
-
 const locationBtn = document.getElementById("locationBtn");
 const weatherLoc = document.getElementById("weatherLoc");
 
-locationBtn.addEventListener("click", () => {
+async function processBtnData() {
   const valuePut = weatherLoc.value;
-  console.log(valuePut);
 
-  (0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.weatherApiData)().getWeatherData(valuePut);
-  updateWeatherDom(valuePut);
+  const weatherData = await (0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.weatherApiData)().getWeatherData(valuePut);
+  if (weatherData) {
+    (0,_dom_js__WEBPACK_IMPORTED_MODULE_1__.displayWeatherData)(weatherData);
+  }
+
   weatherLoc.value = "";
+}
+
+locationBtn.addEventListener("click", async () => {
+  processBtnData();
 });
 
 })();
