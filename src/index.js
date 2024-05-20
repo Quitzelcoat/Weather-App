@@ -1,26 +1,20 @@
 import { weatherApiData } from "./weather-api.js";
-import { weatherDom } from "./dom.js";
-
-const weather = weatherDom();
-
-async function updateWeatherDom(location) {
-  const weatherData = await weatherApiData().getWeatherData(location);
-  if (weatherData) {
-    weather.updateCurrentWeatherDom(weatherData.current);
-    weather.updateLocationWeatherDom(weatherData.location);
-    weather.updateHourlyWeatherDom(weatherData.hourly);
-    weather.updateDailyWeatherDom(weatherData.daily);
-  }
-}
+import { displayWeatherData } from "./dom.js";
 
 const locationBtn = document.getElementById("locationBtn");
 const weatherLoc = document.getElementById("weatherLoc");
 
-locationBtn.addEventListener("click", () => {
+async function processBtnData() {
   const valuePut = weatherLoc.value;
-  console.log(valuePut);
 
-  weatherApiData().getWeatherData(valuePut);
-  updateWeatherDom(valuePut);
+  const weatherData = await weatherApiData().getWeatherData(valuePut);
+  if (weatherData) {
+    displayWeatherData(weatherData);
+  }
+
   weatherLoc.value = "";
+}
+
+locationBtn.addEventListener("click", async () => {
+  processBtnData();
 });

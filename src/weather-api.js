@@ -8,7 +8,8 @@ export const weatherApiData = () => {
       );
       const data = await response.json();
       console.log(data);
-      return processWeatherData(data);
+      const processedData = await processWeatherData(data);
+      return processedData;
     } catch (error) {
       console.log("Error fetching the image: ", error);
       return null;
@@ -23,13 +24,13 @@ export const weatherApiData = () => {
       return null;
     }
 
-    const currentWeather = processCurrentWeather(data.current);
-    const weatherLocation = currentLocation(data.location);
-    const hourlyForecast = processHourlyForecast(
+    const currentWeather = await processCurrentWeather(data.current);
+    const weatherLocation = await currentLocation(data.location);
+    const hourlyForecast = await processHourlyForecast(
       data.forecast.forecastday[0].hour
     );
-    const dailyForecast = processDailyForecast(
-      data.forecast.forecastday.slice(0, 3)
+    const dailyForecast = await processDailyForecast(
+      data.forecast.forecastday.slice(0, 4)
     );
 
     return {
@@ -49,7 +50,6 @@ export const weatherApiData = () => {
       vis_miles,
       temp_c,
       uv,
-      gust_mph,
       air_quality,
     } = currentWeather;
 
@@ -61,7 +61,6 @@ export const weatherApiData = () => {
       visibility: vis_miles,
       temperature: temp_c,
       uvIndex: uv,
-      gust: gust_mph,
       airQuality: air_quality.pm10,
     };
 
@@ -72,9 +71,12 @@ export const weatherApiData = () => {
   async function currentLocation(currentLocationData) {
     const { country, localtime, name } = currentLocationData;
 
+    const timePart = localtime.split(" ")[1];
+    const strTime = convertTo12HourFormat(timePart);
+
     const LocationData = {
       country: country,
-      time: localtime,
+      time: strTime,
       city: name,
     };
 
@@ -83,14 +85,36 @@ export const weatherApiData = () => {
   }
 
   async function processHourlyForecast(hourlyData) {
-    const next12Hours = hourlyData.slice(0, 13).map((hour) => ({
-      time: hour.time,
-      temperature: hour.temp_c,
-      condition: hour.condition.text,
-    }));
+    const now = new Date();
+    const currentHour = now.getHours();
+    const next12Hours = [];
+
+    for (let i = 0; i < 13; i++) {
+      const hourIndex = (currentHour + i) % 24; // Ensure we wrap around if necessary
+      const hourData = hourlyData[hourIndex];
+
+      const timePart = hourData.time.split(" ")[1];
+      const strTime = convertTo12HourFormat(timePart);
+
+      next12Hours.push({
+        time: strTime,
+        temperature: hourData.temp_c,
+        condition: hourData.condition.text,
+      });
+    }
 
     console.log(next12Hours);
     return next12Hours;
+  }
+
+  function convertTo12HourFormat(timeString) {
+    const [hour, minute] = timeString.split(":");
+    let hours = parseInt(hour);
+    const minutes = parseInt(minute);
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes} ${ampm}`;
   }
 
   async function processDailyForecast(dailyData) {
