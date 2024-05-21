@@ -4,123 +4,137 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tempelate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Heading -->
     <header>
       <h2>Today's Weather</h2>
     </header>
 
-    <main class="container">
-      <!-- Front Page -->
-
-      <article class="location-input">
+    <!-- Front Page -->
+    <main class="container" id="frontContainer">
+      <div class="shadingContainer">
         <!-- Location Search Bar -->
-        <form action="none">
-          <div class="weatherLocation">
-            <label for="weatherLoc">Location</label>
+        <article class="location-input">
+          <form class="locationForm" action="none">
+            <div class="weatherLocation">
+              <label for="weatherLoc"></label>
 
-            <input type="text" name="weatherLoc" id="weatherLoc" />
-          </div>
+              <input type="text" name="weatherLoc" id="weatherLoc" />
+            </div>
 
-          <button id="locationBtn" type="button">Submit</button>
-        </form>
-      </article>
+            <button id="locationBtn" type="button">Submit</button>
+          </form>
+        </article>
 
-      <article class="frontPage showData">
         <!-- Front Page Weather Info -->
-        <div class="topFront">
-          <div class="currentLocation">
-            <p class="todayName">today</p>
-            <p class="todayTime"></p>
-            <p class="locationToday"></p>
+        <article class="frontPage showData">
+          <div class="topFront">
+            <div class="currentLocation">
+              <p class="todayName">today</p>
+              <p class="todayTime"></p>
+              <p class="locationToday"></p>
+            </div>
+
+            <div class="currentTemp">
+              <p id="currentCelcius"></p>
+              <p class="currentHigh"></p>
+              <p class="currentLow"></p>
+            </div>
           </div>
 
-          <div class="currentTemp">
-            <p id="currentCelcius"></p>
-            <p class="currentHigh"></p>
-            <p class="currentLow"></p>
+          <div class="bottomFront">
+            <div class="weatherAlert">
+              <p class="weatherCondition"></p>
+            </div>
+            <div id="todayHoursContainer">
+              <div id="leftHoursArrow">&#9664;</div>
+              <div id="todayHours"></div>
+              <div id="rightHoursArrow">&#9654;</div>
+            </div>
           </div>
-        </div>
 
-        <div class="bottomFront">
-          <div class="weatherAlert">
-            <p class="weatherCondition"></p>
-          </div>
+          <div class="pageSlider"></div>
+        </article>
+      </div>
+    </main>
 
-          <div id="todayHours"></div>
-        </div>
-
-        <div class="pageSlider"></div>
-      </article>
-
-      <!-- Back Page -->
-
-      <article class="backPage showData">
+    <!-- Back Page -->
+    <main class="container" id="back-container">
+      <div class="shadingContainer">
         <!-- Weather Detail and Next Two days weather Info -->
-        <div class="topBack">
-          <div class="uvIndex">
-            <p class="uvIndexText">uv Index</p>
-            <p class="uvIndexData"></p>
+        <article class="backPage showData">
+          <div class="topBack">
+            <div class="uvIndex">
+              <p class="uvIndexText">uv Index</p>
+              <p class="uvIndexData"></p>
+            </div>
+
+            <div class="wind">
+              <p class="windText">Wind</p>
+              <p class="windData"></p>
+            </div>
+
+            <div class="humidity">
+              <p class="humiditiyText">humidity</p>
+              <p class="humiditiyData"></p>
+            </div>
+
+            <div class="feelsLike">
+              <p class="feelsLikeText">feelsLike</p>
+              <p class="feelsLikeData"></p>
+            </div>
+
+            <div class="visibility">
+              <p class="visibilityText">visibility</p>
+              <p class="visibilityData"></p>
+            </div>
+
+            <div class="airQuality">
+              <p class="airQualityText">air quality</p>
+              <p class="airQualityData"></p>
+            </div>
           </div>
 
-          <div class="wind">
-            <p class="windText">Wind</p>
-            <p class="windData"></p>
+          <div class="middleBack">
+            <div class="nextDays">next 3 days</div>
+            <div class="forecast">Forecast</div>
           </div>
 
-          <div class="humidity">
-            <p class="humiditiyText">humidity</p>
-            <p class="humiditiyData"></p>
-          </div>
+          <div class="bottomBack">
+            <div class="todayCast">
+              <p class="nextDate"></p>
+              <p class="daySituation"></p>
+              <p class="dayTemperature"></p>
+            </div>
 
-          <div class="feelsLike">
-            <p class="feelsLikeText">feelsLike</p>
-            <p class="feelsLikeData"></p>
-          </div>
+            <div class="tomorrowCast">
+              <p class="nextDate"></p>
+              <p class="daySituation"></p>
+              <p class="dayTemperature"></p>
+            </div>
 
-          <div class="visibility">
-            <p class="visibilityText">visibility</p>
-            <p class="visibilityData"></p>
-          </div>
+            <div class="nextDayCast">
+              <p class="nextDate"></p>
+              <p class="daySituation"></p>
+              <p class="dayTemperature"></p>
+            </div>
 
-          <div class="airQuality">
-            <p class="airQualityText">air quality</p>
-            <p class="airQualityData"></p>
+            <div class="thirdDayCast">
+              <p class="nextDate"></p>
+              <p class="daySituation"></p>
+              <p class="dayTemperature"></p>
+            </div>
           </div>
-        </div>
-
-        <div class="middleBack">
-          <div class="nextDays">next 3 days</div>
-          <div class="forecast">Forecast</div>
-        </div>
-
-        <div class="bottomBack">
-          <div class="todayCast">
-            <p class="nextDate"></p>
-            <p class="daySituation"></p>
-            <p class="dayTemperature"></p>
-          </div>
-
-          <div class="tomorrowCast">
-            <p class="nextDate"></p>
-            <p class="daySituation"></p>
-            <p class="dayTemperature"></p>
-          </div>
-
-          <div class="nextDayCast">
-            <p class="nextDate"></p>
-            <p class="daySituation"></p>
-            <p class="dayTemperature"></p>
-          </div>
-
-          <div class="thirdDayCast">
-            <p class="nextDate"></p>
-            <p class="daySituation"></p>
-            <p class="dayTemperature"></p>
-          </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </main>
 
     <footer></footer>

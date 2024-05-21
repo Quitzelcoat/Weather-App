@@ -22,18 +22,16 @@ function displayWeatherData(data) {
   // FRONT PAGE!
 
   // Display location info
-  document.querySelector(
-    ".todayTime"
-  ).textContent = `Local Time: ${data.location.time}`;
+  document.querySelector(".todayTime").textContent = `${data.location.time}`;
 
   document.querySelector(
     ".locationToday"
-  ).textContent = `Location: ${data.location.city}, ${data.location.country}`;
+  ).textContent = `${data.location.city}`;
 
   // Display current weather
   document.getElementById(
     "currentCelcius"
-  ).textContent = `Temperature: ${data.current.temperature}°C`;
+  ).textContent = `${data.current.temperature}°C`;
 
   if (data.daily.length > 0) {
     const today = data.daily[0];
@@ -46,17 +44,22 @@ function displayWeatherData(data) {
   const todayHours = document.getElementById("todayHours");
   todayHours.innerHTML = "";
   data.hourly.forEach((hour) => {
+    const eachHourDiv = document.createElement("div");
     const todayHourDiv = document.createElement("div");
     const todayConditionDiv = document.createElement("div");
     const todayTimeDiv = document.createElement("div");
+
+    eachHourDiv.className = "eachHourDiv";
+    eachHourDiv.classList.add("insideHour");
 
     todayHourDiv.textContent = `${hour.temperature}°C`;
     todayConditionDiv.textContent = `${hour.condition}`;
     todayTimeDiv.textContent = `${hour.time}`;
 
-    todayHours.appendChild(todayHourDiv);
-    todayHours.appendChild(todayConditionDiv);
-    todayHours.appendChild(todayTimeDiv);
+    eachHourDiv.appendChild(todayHourDiv);
+    eachHourDiv.appendChild(todayConditionDiv);
+    eachHourDiv.appendChild(todayTimeDiv);
+    todayHours.appendChild(eachHourDiv);
   });
 
   // BACK PAGE!
@@ -121,7 +124,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const weatherApiData = () => {
   async function getWeatherData(location) {
-    let apiKey = "0d353533d1cd4029975135630240705";
+    let apiKey = "";
     try {
       const response = await fetch(
         `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4&aqi=yes&alerts=yes`,
