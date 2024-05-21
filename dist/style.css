@@ -1,0 +1,87 @@
+body {
+  background-color: #808afe;
+  margin: 0%;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+header h2 {
+  font-weight: 800;
+}
+
+/* Front Page, Top section. */
+#frontContainer {
+  height: 650px;
+  width: 350px;
+  background-color: aliceblue;
+}
+
+.weatherLocation {
+  display: inline;
+}
+
+.locationForm {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0 0;
+}
+
+#weatherLoc {
+  width: 100%;
+}
+
+.topFront {
+  padding: 20px 0;
+}
+
+.currentLocation,
+.currentTemp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0 2rem;
+}
+
+.weatherCondition {
+  text-align: center;
+}
+
+/* Front Bottom Hours Arrows */
+#todayHoursContainer {
+  display: flex;
+  align-items: center;
+}
+
+#todayHours {
+  display: flex;
+  /* flex-wrap: wrap; */
+  /* justify-content: center; */
+
+  overflow: hidden;
+  width: 80%;
+}
+
+.eachHourDiv {
+  min-width: 20%; /* Adjust the width to show exactly 5 items at a time */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+button {
+  background-color: #ccc;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+}
