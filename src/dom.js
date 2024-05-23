@@ -5,28 +5,28 @@ function setBackgroundImage(condition) {
 
   switch (condition) {
     case "Sunny":
-      imageUrl = "../dist/images/desert.jpg";
+      imageUrl = "../images/desert.jpg";
       break;
     case "Clear":
-      imageUrl = "../dist/images/desert.jpg";
+      imageUrl = "../images/desert.jpg";
       break;
     case "Cloudy":
-      imageUrl = "../dist/images/cloud.jpg";
+      imageUrl = "../images/cloud.jpg";
       break;
     case "rainy":
-      imageUrl = "../dist/images/rain.jpg";
+      imageUrl = "../images/rain.jpg";
       break;
     case "Patchy rain nearby":
-      imageUrl = "../dist/images/rain.jpg";
+      imageUrl = "../images/rain.jpg";
       break;
     case "Torrential rain shower":
-      imageUrl = "../dist/images/rain.jpg";
+      imageUrl = "../images/rain.jpg";
       break;
     case "thunderstorm":
-      imageUrl = "../dist/images/thunderstorm.jpg";
+      imageUrl = "../images/thunderstorm.jpg";
       break;
     default:
-      imageUrl = "../dist/images/cloud.jpg";
+      imageUrl = "../images/cloud.jpg";
   }
 
   body.style.backgroundImage = `url(${imageUrl})`;
@@ -86,35 +86,35 @@ export function displayWeatherData(data) {
     // Determine the appropriate weather icon based on the condition
     switch (hour.condition.toLowerCase()) {
       case "sunny":
-        weatherIcon.src = "../dist/images/sun.png";
+        weatherIcon.src = "../images/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "Patchy rain nearby":
-        weatherIcon.src = "../dist/images/rain.png";
+        weatherIcon.src = "../images/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "Patchy rain":
-        weatherIcon.src = "../dist/images/rain.png";
+        weatherIcon.src = "../images/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "clear":
-        weatherIcon.src = "../dist/images/sun.png";
+        weatherIcon.src = "../images/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "cloudy":
-        weatherIcon.src = "../dist/images/cloud.png"; // Replace with the actual path to your cloudy icon
+        weatherIcon.src = "../images/cloud.png"; // Replace with the actual path to your cloudy icon
         weatherIcon.alt = "Cloudy";
         break;
       case "rainy":
-        weatherIcon.src = "../dist/images/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "../images/rain.png"; // Replace with the actual path to your rainy icon
         weatherIcon.alt = "Rainy";
         break;
       case "Light rain":
-        weatherIcon.src = "../dist/images/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "../images/rain.png"; // Replace with the actual path to your rainy icon
         weatherIcon.alt = "Rainy";
         break;
       default:
-        weatherIcon.src = "../dist/images/partly-cloudy.png"; // Optional: a default icon
+        weatherIcon.src = "../images/partly-cloudy.png"; // Optional: a default icon
         weatherIcon.alt = "Weather";
     }
 
