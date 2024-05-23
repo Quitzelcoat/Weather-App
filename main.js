@@ -12,8 +12,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   displayWeatherData: () => (/* binding */ displayWeatherData)
 /* harmony export */ });
+// Function to set the background image based on weather condition
+function setBackgroundImage(condition) {
+  const body = document.body;
+  let imageUrl;
+
+  switch (condition) {
+    case "Sunny":
+      imageUrl = "../dist/images/desert.jpg";
+      break;
+    case "Clear":
+      imageUrl = "../dist/images/desert.jpg";
+      break;
+    case "Cloudy":
+      imageUrl = "../dist/images/cloud.jpg";
+      break;
+    case "rainy":
+      imageUrl = "../dist/images/rain.jpg";
+      break;
+    case "Patchy rain nearby":
+      imageUrl = "../dist/images/rain.jpg";
+      break;
+    case "Torrential rain shower":
+      imageUrl = "../dist/images/rain.jpg";
+      break;
+    case "thunderstorm":
+      imageUrl = "../dist/images/thunderstorm.jpg";
+      break;
+    default:
+      imageUrl = "../dist/images/cloud.jpg";
+  }
+
+  body.style.backgroundImage = `url(${imageUrl})`;
+  body.style.backgroundSize = "cover";
+  body.style.backgroundPosition = "center";
+}
+
 function displayWeatherData(data) {
   if (!data) return;
+
+  setBackgroundImage(data.current.Weather);
+  console.log(data.current.Weather);
 
   const currentHigh = document.querySelector(".currentHigh");
   const currentLow = document.querySelector(".currentLow");
@@ -48,15 +87,53 @@ function displayWeatherData(data) {
     const todayHourDiv = document.createElement("div");
     const todayConditionDiv = document.createElement("div");
     const todayTimeDiv = document.createElement("div");
+    const weatherIcon = document.createElement("img");
 
     eachHourDiv.className = "eachHourDiv";
     eachHourDiv.classList.add("insideHour");
+    weatherIcon.classList.add("weatherIcon");
 
-    todayHourDiv.textContent = `${hour.temperature}°C`;
-    todayConditionDiv.textContent = `${hour.condition}`;
+    todayHourDiv.textContent = `${hour.temperature}°`;
+    // todayConditionDiv.textContent = `${hour.condition}`;
     todayTimeDiv.textContent = `${hour.time}`;
 
+    // Determine the appropriate weather icon based on the condition
+    switch (hour.condition.toLowerCase()) {
+      case "sunny":
+        weatherIcon.src = "../dist/images/sun.png";
+        weatherIcon.alt = "Sunny";
+        break;
+      case "Patchy rain nearby":
+        weatherIcon.src = "../dist/images/rain.png";
+        weatherIcon.alt = "Rainy";
+        break;
+      case "Patchy rain":
+        weatherIcon.src = "../dist/images/rain.png";
+        weatherIcon.alt = "Rainy";
+        break;
+      case "clear":
+        weatherIcon.src = "../dist/images/sun.png";
+        weatherIcon.alt = "Sunny";
+        break;
+      case "cloudy":
+        weatherIcon.src = "../dist/images/cloud.png"; // Replace with the actual path to your cloudy icon
+        weatherIcon.alt = "Cloudy";
+        break;
+      case "rainy":
+        weatherIcon.src = "../dist/images/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.alt = "Rainy";
+        break;
+      case "Light rain":
+        weatherIcon.src = "../dist/images/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.alt = "Rainy";
+        break;
+      default:
+        weatherIcon.src = "../dist/images/partly-cloudy.png"; // Optional: a default icon
+        weatherIcon.alt = "Weather";
+    }
+
     eachHourDiv.appendChild(todayHourDiv);
+    eachHourDiv.appendChild(weatherIcon);
     eachHourDiv.appendChild(todayConditionDiv);
     eachHourDiv.appendChild(todayTimeDiv);
     todayHours.appendChild(eachHourDiv);
@@ -107,6 +184,39 @@ function displayWeatherData(data) {
       ).textContent = `${dayData.maxTemperature}°C / ${dayData.minTemperature}°C`;
     }
   });
+
+  const leftHoursArrow = document.getElementById("leftHoursArrow");
+  const rightHoursArrow = document.getElementById("rightHoursArrow");
+
+  let scrollPosition = 0;
+
+  function updateArrows() {
+    leftHoursArrow.disabled = scrollPosition === 0;
+    rightHoursArrow.disabled =
+      scrollPosition >= todayHours.scrollWidth - todayHours.clientWidth;
+  }
+
+  function scrollTodayHours(direction) {
+    const scrollAmount = todayHours.clientWidth / 5; // Scroll by the width of one visible item
+    if (direction === "left") {
+      scrollPosition = Math.max(scrollPosition - scrollAmount, 0);
+    } else {
+      scrollPosition = Math.min(
+        scrollPosition + scrollAmount,
+        todayHours.scrollWidth - todayHours.clientWidth
+      );
+    }
+    todayHours.scrollTo({
+      left: scrollPosition,
+      behavior: "smooth",
+    });
+    updateArrows();
+  }
+
+  updateArrows();
+
+  leftHoursArrow.addEventListener("click", () => scrollTodayHours("left"));
+  rightHoursArrow.addEventListener("click", () => scrollTodayHours("right"));
 }
 
 
@@ -124,7 +234,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const weatherApiData = () => {
   async function getWeatherData(location) {
-    let apiKey = "";
+    let apiKey = "0d353533d1cd4029975135630240705";
     try {
       const response = await fetch(
         `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4&aqi=yes&alerts=yes`,
@@ -334,6 +444,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
 
 
+
+(0,_weather_api_js__WEBPACK_IMPORTED_MODULE_0__.weatherApiData)().getWeatherData("miami");
 
 const locationBtn = document.getElementById("locationBtn");
 const weatherLoc = document.getElementById("weatherLoc");
