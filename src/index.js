@@ -1,6 +1,8 @@
 import { weatherApiData } from "./weather-api.js";
 import { displayWeatherData } from "./dom.js";
 
+weatherApiData().getWeatherData("miami");
+
 const locationBtn = document.getElementById("locationBtn");
 const weatherLoc = document.getElementById("weatherLoc");
 

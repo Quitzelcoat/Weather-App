@@ -1,11 +1,22 @@
 body {
-  background-color: #808afe;
   margin: 0%;
   display: grid;
   justify-content: center;
   justify-items: center;
-
+  /* color: #0d2025; */
+  color: #f0f8ff;
   font-family: "Montserrat", sans-serif;
+
+  background-image: url(../dist/images/thunderstorm.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.img {
+  z-index: -1;
+  width: 100%;
+  height: 100%;
 }
 
 p {
@@ -20,25 +31,60 @@ header h2 {
 #frontContainer {
   height: 650px;
   width: 350px;
-  background-color: aliceblue;
+  border-radius: 30px;
+  border: 15px solid rgba(255, 255, 255, 0.3);
+  background-clip: padding-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#locationBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #d9f6ff;
+  outline: none;
+  padding-right: 30px;
+}
+
+#locationBtn:hover {
+  color: #274e58;
 }
 
 .weatherLocation {
-  display: inline;
+  padding-left: 30px;
+  width: 60%;
 }
 
 .locationForm {
   display: flex;
-  justify-content: space-around;
-  padding: 20px 0 0;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #weatherLoc {
   width: 100%;
+  height: 25px;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 2px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: transparent;
+  color: #fff;
 }
 
-.topFront {
-  padding: 20px 0;
+#weatherLoc:focus {
+  outline: none;
+  border-bottom: 1px solid rgba(203, 222, 243, 0.6);
+  color: rgba(203, 222, 243, 0.6);
+}
+
+#weatherLoc::placeholder {
+  color: rgba(203, 222, 243, 0.6);
+  background-color: transparent;
 }
 
 .currentLocation,
@@ -57,31 +103,61 @@ header h2 {
 #todayHoursContainer {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 #todayHours {
   display: flex;
-  /* flex-wrap: wrap; */
-  /* justify-content: center; */
-
   overflow: hidden;
   width: 80%;
 }
 
 .eachHourDiv {
-  min-width: 20%; /* Adjust the width to show exactly 5 items at a time */
+  min-width: 20%;
   box-sizing: border-box;
   text-align: center;
 }
 
-button {
-  background-color: #ccc;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
+/* Front middle and Bottom */
+.FrontMiddleSection {
+  flex-grow: 0.5;
 }
 
-button:disabled {
-  background-color: #eee;
-  cursor: not-allowed;
+.topFront {
+  padding: 20px 20px 20px 0;
+  letter-spacing: 1.5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.currentLocation {
+  font-size: 16px;
+}
+
+#currentCelcius {
+  font-weight: 900;
+  font-size: 28px;
+}
+
+.tempHLCurrent {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 2rem;
+  letter-spacing: 0;
+  font-size: 12px;
+}
+
+.currentHigh {
+  padding-right: 3px;
+}
+
+.weatherCondition {
+  font-size: 16px;
+  padding-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+}
+
+.eachHourDiv {
+  font-size: 13px;
+  padding-left: 20px;
 }
