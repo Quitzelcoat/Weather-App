@@ -102,19 +102,19 @@ export function displayWeatherData(data) {
         weatherIcon.alt = "Sunny";
         break;
       case "cloudy":
-        weatherIcon.src = "images/background/cloud.png"; // Replace with the actual path to your cloudy icon
+        weatherIcon.src = "images/background/cloud.png";
         weatherIcon.alt = "Cloudy";
         break;
       case "rainy":
-        weatherIcon.src = "images/background/rain.jpg"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "images/background/rain.jpg";
         weatherIcon.alt = "Rainy";
         break;
       case "Light rain":
-        weatherIcon.src = "images/background/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       default:
-        weatherIcon.src = "images/background/partly-cloudy.png"; // Optional: a default icon
+        weatherIcon.src = "images/background/partly-cloudy.png";
         weatherIcon.alt = "Weather";
     }
 

@@ -7,7 +7,7 @@ export const weatherApiData = () => {
         { mode: "cors" }
       );
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const processedData = await processWeatherData(data);
       return processedData;
     } catch (error) {
@@ -64,7 +64,7 @@ export const weatherApiData = () => {
       airQuality: air_quality.pm10,
     };
 
-    console.log(weatherInfo);
+    // console.log(weatherInfo);
     return weatherInfo;
   }
 
@@ -80,7 +80,7 @@ export const weatherApiData = () => {
       city: name,
     };
 
-    console.log(LocationData);
+    // console.log(LocationData);
     return LocationData;
   }
 
@@ -103,7 +103,7 @@ export const weatherApiData = () => {
       });
     }
 
-    console.log(next12Hours);
+    // console.log(next12Hours);
     return next12Hours;
   }
 
@@ -126,7 +126,7 @@ export const weatherApiData = () => {
       minTemperature: day.day.mintemp_c,
     }));
 
-    console.log(next3Days);
+    // console.log(next3Days);
     return next3Days;
   }
 
