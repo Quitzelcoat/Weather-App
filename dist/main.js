@@ -19,28 +19,28 @@ function setBackgroundImage(condition) {
 
   switch (condition) {
     case "Sunny":
-      imageUrl = "../images/desert.jpg";
+      imageUrl = "../images/background/desert.jpg";
       break;
     case "Clear":
-      imageUrl = "../images/desert.jpg";
+      imageUrl = "../images/background/desert.jpg";
       break;
     case "Cloudy":
-      imageUrl = "../images/cloud.jpg";
+      imageUrl = "../images/background/cloud.jpg";
       break;
     case "rainy":
-      imageUrl = "../images/rain.jpg";
+      imageUrl = "../images/background/rain.jpg";
       break;
     case "Patchy rain nearby":
-      imageUrl = "../images/rain.jpg";
+      imageUrl = "../images/background/rain.jpg";
       break;
     case "Torrential rain shower":
-      imageUrl = "../images/rain.jpg";
+      imageUrl = "../images/background/rain.jpg";
       break;
     case "thunderstorm":
-      imageUrl = "../images/thunderstorm.jpg";
+      imageUrl = "../images/background/thunderstorm.jpg";
       break;
     default:
-      imageUrl = "../images/cloud.jpg";
+      imageUrl = "../images/background/cloud.jpg";
   }
 
   body.style.backgroundImage = `url(${imageUrl})`;
@@ -100,23 +100,23 @@ function displayWeatherData(data) {
     // Determine the appropriate weather icon based on the condition
     switch (hour.condition.toLowerCase()) {
       case "sunny":
-        weatherIcon.src = "../images/sun.png";
+        weatherIcon.src = "../images/background/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "Patchy rain nearby":
-        weatherIcon.src = "../images/rain.png";
+        weatherIcon.src = "../images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "Patchy rain":
-        weatherIcon.src = "../images/rain.png";
+        weatherIcon.src = "../images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "clear":
-        weatherIcon.src = "../images/sun.png";
+        weatherIcon.src = "../images/background/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "cloudy":
-        weatherIcon.src = "../images/cloud.png"; // Replace with the actual path to your cloudy icon
+        weatherIcon.src = "../images/background/cloud.png"; // Replace with the actual path to your cloudy icon
         weatherIcon.alt = "Cloudy";
         break;
       case "rainy":
@@ -124,11 +124,11 @@ function displayWeatherData(data) {
         weatherIcon.alt = "Rainy";
         break;
       case "Light rain":
-        weatherIcon.src = "../images/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "../images/background/rain.png"; // Replace with the actual path to your rainy icon
         weatherIcon.alt = "Rainy";
         break;
       default:
-        weatherIcon.src = "../images/partly-cloudy.png"; // Optional: a default icon
+        weatherIcon.src = "../images/background/partly-cloudy.png"; // Optional: a default icon
         weatherIcon.alt = "Weather";
     }
 
@@ -237,7 +237,7 @@ const weatherApiData = () => {
     let apiKey = "0d353533d1cd4029975135630240705";
     try {
       const response = await fetch(
-        `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4&aqi=yes&alerts=yes`,
+        `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4&aqi=yes&alerts=yes`,
         { mode: "cors" }
       );
       const data = await response.json();
