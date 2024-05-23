@@ -5,28 +5,28 @@ function setBackgroundImage(condition) {
 
   switch (condition) {
     case "Sunny":
-      imageUrl = "../dist/images/background/desert.jpg";
+      imageUrl = "images/background/desert.jpg";
       break;
     case "Clear":
-      imageUrl = "../dist/images/background/desert.jpg";
+      imageUrl = "images/background/desert.jpg";
       break;
     case "Cloudy":
-      imageUrl = "../dist/images/background/cloud.jpg";
+      imageUrl = "images/background/cloud.jpg";
       break;
     case "rainy":
-      imageUrl = "../dist/images/background/rain.jpg";
+      imageUrl = "images/background/rain.jpg";
       break;
     case "Patchy rain nearby":
-      imageUrl = "../dist/images/background/rain.jpg";
+      imageUrl = "images/background/rain.jpg";
       break;
     case "Torrential rain shower":
-      imageUrl = "../dist/images/background/rain.jpg";
+      imageUrl = "images/background/rain.jpg";
       break;
     case "thunderstorm":
-      imageUrl = "../dist/images/background/thunderstorm.jpg";
+      imageUrl = "images/background/thunderstorm.jpg";
       break;
     default:
-      imageUrl = "../dist/images/background/cloud.jpg";
+      imageUrl = "images/background/cloud.jpg";
   }
 
   body.style.backgroundImage = `url(${imageUrl})`;
