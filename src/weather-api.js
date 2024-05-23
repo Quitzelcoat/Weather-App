@@ -3,7 +3,7 @@ export const weatherApiData = () => {
     let apiKey = "0d353533d1cd4029975135630240705";
     try {
       const response = await fetch(
-        `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4&aqi=yes&alerts=yes`,
+        `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=4&aqi=yes&alerts=yes`,
         { mode: "cors" }
       );
       const data = await response.json();
