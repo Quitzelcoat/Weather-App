@@ -86,35 +86,35 @@ export function displayWeatherData(data) {
     // Determine the appropriate weather icon based on the condition
     switch (hour.condition.toLowerCase()) {
       case "sunny":
-        weatherIcon.src = "../dist/images/background/sun.png";
+        weatherIcon.src = "images/background/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "Patchy rain nearby":
-        weatherIcon.src = "../dist/images/background/rain.png";
+        weatherIcon.src = "images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "Patchy rain":
-        weatherIcon.src = "../dist/images/background/rain.png";
+        weatherIcon.src = "images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "clear":
-        weatherIcon.src = "../dist/images/background/sun.png";
+        weatherIcon.src = "images/background/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "cloudy":
-        weatherIcon.src = "../dist/images/background/cloud.png"; // Replace with the actual path to your cloudy icon
+        weatherIcon.src = "images/background/cloud.png"; // Replace with the actual path to your cloudy icon
         weatherIcon.alt = "Cloudy";
         break;
       case "rainy":
-        weatherIcon.src = "../dist/images/background/rain.jpg"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "images/background/rain.jpg"; // Replace with the actual path to your rainy icon
         weatherIcon.alt = "Rainy";
         break;
       case "Light rain":
-        weatherIcon.src = "./images/background/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "images/background/rain.png"; // Replace with the actual path to your rainy icon
         weatherIcon.alt = "Rainy";
         break;
       default:
-        weatherIcon.src = "./images/background/partly-cloudy.png"; // Optional: a default icon
+        weatherIcon.src = "images/background/partly-cloudy.png"; // Optional: a default icon
         weatherIcon.alt = "Weather";
     }
 
