@@ -94,41 +94,40 @@ function displayWeatherData(data) {
     weatherIcon.classList.add("weatherIcon");
 
     todayHourDiv.textContent = `${hour.temperature}°`;
-    // todayConditionDiv.textContent = `${hour.condition}`;
     todayTimeDiv.textContent = `${hour.time}`;
 
     // Determine the appropriate weather icon based on the condition
     switch (hour.condition.toLowerCase()) {
       case "sunny":
-        weatherIcon.src = "../dist/images/background/sun.png";
+        weatherIcon.src = "images/background/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "Patchy rain nearby":
-        weatherIcon.src = "../dist/images/background/rain.png";
+        weatherIcon.src = "images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "Patchy rain":
-        weatherIcon.src = "../dist/images/background/rain.png";
+        weatherIcon.src = "images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       case "clear":
-        weatherIcon.src = "../dist/images/background/sun.png";
+        weatherIcon.src = "images/background/sun.png";
         weatherIcon.alt = "Sunny";
         break;
       case "cloudy":
-        weatherIcon.src = "../dist/images/background/cloud.png"; // Replace with the actual path to your cloudy icon
+        weatherIcon.src = "images/background/cloud.png";
         weatherIcon.alt = "Cloudy";
         break;
       case "rainy":
-        weatherIcon.src = "../dist/images/background/rain.jpg"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "images/background/rain.jpg";
         weatherIcon.alt = "Rainy";
         break;
       case "Light rain":
-        weatherIcon.src = "./images/background/rain.png"; // Replace with the actual path to your rainy icon
+        weatherIcon.src = "images/background/rain.png";
         weatherIcon.alt = "Rainy";
         break;
       default:
-        weatherIcon.src = "./images/background/partly-cloudy.png"; // Optional: a default icon
+        weatherIcon.src = "images/background/partly-cloudy.png";
         weatherIcon.alt = "Weather";
     }
 
@@ -241,7 +240,7 @@ const weatherApiData = () => {
         { mode: "cors" }
       );
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const processedData = await processWeatherData(data);
       return processedData;
     } catch (error) {
@@ -298,7 +297,7 @@ const weatherApiData = () => {
       airQuality: air_quality.pm10,
     };
 
-    console.log(weatherInfo);
+    // console.log(weatherInfo);
     return weatherInfo;
   }
 
@@ -314,7 +313,7 @@ const weatherApiData = () => {
       city: name,
     };
 
-    console.log(LocationData);
+    // console.log(LocationData);
     return LocationData;
   }
 
@@ -337,7 +336,7 @@ const weatherApiData = () => {
       });
     }
 
-    console.log(next12Hours);
+    // console.log(next12Hours);
     return next12Hours;
   }
 
@@ -360,7 +359,7 @@ const weatherApiData = () => {
       minTemperature: day.day.mintemp_c,
     }));
 
-    console.log(next3Days);
+    // console.log(next3Days);
     return next3Days;
   }
 
@@ -463,6 +462,14 @@ async function processBtnData() {
 
 locationBtn.addEventListener("click", async () => {
   processBtnData();
+});
+
+weatherLoc.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    await processBtnData();
+    console.log("It worked");
+  }
 });
 
 })();
