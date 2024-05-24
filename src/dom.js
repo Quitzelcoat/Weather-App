@@ -80,7 +80,6 @@ export function displayWeatherData(data) {
     weatherIcon.classList.add("weatherIcon");
 
     todayHourDiv.textContent = `${hour.temperature}°`;
-    // todayConditionDiv.textContent = `${hour.condition}`;
     todayTimeDiv.textContent = `${hour.time}`;
 
     // Determine the appropriate weather icon based on the condition

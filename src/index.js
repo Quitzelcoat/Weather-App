@@ -20,3 +20,11 @@ async function processBtnData() {
 locationBtn.addEventListener("click", async () => {
   processBtnData();
 });
+
+weatherLoc.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    await processBtnData();
+    console.log("It worked");
+  }
+});

@@ -11,3 +11,7 @@ npm run <script name>
 npx eslint ./folder/file.js
 
 ## Prettier can be used without any problems when you save the file
+
+## To watch live
+
+npx webpack --watch
